@@ -5,11 +5,11 @@ import { LayoutDashboard, ShoppingCart, Package, Users, Settings } from 'lucide-
 import { cn } from '@/lib/utils'
 import { SidebarLink } from './sidebar-link'
 import { ToggleButton } from './toggle-button'
-import { useSession } from 'next-auth/react'
+// import { useSession } from 'next-auth/react'
 
 export function Sidebar() {
   const [collapsed, setCollapsed] = useState(false)
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
   
   return (
     <aside
@@ -50,7 +50,7 @@ export function Sidebar() {
           订单管理
         </SidebarLink>
 
-        {session?.user.role === 'ADMIN' && (
+        {
           <SidebarLink
             icon={<Users className="h-4 w-4" />}
             href="/customers"
@@ -58,7 +58,7 @@ export function Sidebar() {
           >
             客户管理
           </SidebarLink>
-        )}
+        }
       </nav>
 
       {/* 底部设置 */}

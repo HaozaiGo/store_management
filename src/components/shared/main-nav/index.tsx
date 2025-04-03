@@ -1,13 +1,15 @@
+// "use client"
+
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+// import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { navConfig } from "./nav-items"
 import { UserDropdown } from "./user-dropdown"
-import { auth } from "@/auth"
+// import { auth } from "@/auth"
 
 export async function MainNav() {
-  const session = await auth()
-  const pathname = usePathname()
+  // const session = await auth()
+  // const pathname = usePathname()
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background">
@@ -23,10 +25,10 @@ export async function MainNav() {
             <Link
               key={item.href}
               href={item.href}
-              className={cn(
-                "text-sm font-medium transition-colors hover:text-primary",
-                pathname === item.href ? "text-primary" : "text-muted-foreground"
-              )}
+              // className={cn(
+              //   "text-sm font-medium transition-colors hover:text-primary",
+              //   pathname === item.href ? "text-primary" : "text-muted-foreground"
+              // )}
             >
               {item.title}
             </Link>
@@ -35,7 +37,7 @@ export async function MainNav() {
 
         {/* 右侧用户区 */}
         <div className="flex items-center gap-4">
-          <UserDropdown user={session?.user} />
+          {/* <UserDropdown user={session?.user} /> */}
         </div>
       </div>
     </header>

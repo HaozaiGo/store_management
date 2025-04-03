@@ -1,4 +1,4 @@
-import { ProductList } from "@/components/products/product-list"
+// import { ProductList } from "@/components/products/product-list"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getProducts } from "@/actions/product"
@@ -22,7 +22,7 @@ export default async function ProductsPage() {
           <Link href="/products/new">添加商品</Link>
         </Button>
       </div>
-      <ProductList products={products} />
+      {/* <ProductList products={products} /> */}
     </div>
   )
 }
