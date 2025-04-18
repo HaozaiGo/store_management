@@ -19,52 +19,52 @@ export async function getProducts() {
   });
 }
 
-export async function createProduct(data: FormData) {
-  const session = await auth();
-  if (!session) throw new Error("未授权");
+// export async function createProduct(data: FormData) {
+//   const session = await auth();
+//   if (!session) throw new Error("未授权");
 
-  const values = Object.fromEntries(data.entries());
-  const validatedData = ProductSchema.parse(values);
+//   const values = Object.fromEntries(data.entries());
+//   const validatedData = ProductSchema.parse(values);
 
-  await prisma.product.create({
-    data: {
-      ...validatedData,
-      price: parseFloat(validatedData.price.toString()),
-      stock: parseInt(validatedData.stock.toString()),
-      categoryId: validatedData.categoryId,
-    },
-  });
+//   await prisma.product.create({
+//     data: {
+//       ...validatedData,
+//       price: parseFloat(validatedData.price.toString()),
+//       stock: parseInt(validatedData.stock.toString()),
+//       categoryId: validatedData.categoryId,
+//     },
+//   });
 
-  revalidatePath("/products");
-}
+//   revalidatePath("/products");
+// }
 
-export async function updateProduct(id: string, data: FormData) {
-  const session = await auth();
-  if (!session) throw new Error("未授权");
+// export async function updateProduct(id: string, data: FormData) {
+//   const session = await auth();
+//   if (!session) throw new Error("未授权");
 
-  const values = Object.fromEntries(data.entries());
-  const validatedData = ProductSchema.parse(values);
+//   const values = Object.fromEntries(data.entries());
+//   const validatedData = ProductSchema.parse(values);
 
-  await prisma.product.update({
-    where: { id },
-    data: {
-      ...validatedData,
-      price: parseFloat(validatedData.price.toString()),
-      stock: parseInt(validatedData.stock.toString()),
-      categoryId: validatedData.categoryId,
-    },
-  });
+//   await prisma.product.update({
+//     where: { id },
+//     data: {
+//       ...validatedData,
+//       price: parseFloat(validatedData.price.toString()),
+//       stock: parseInt(validatedData.stock.toString()),
+//       categoryId: validatedData.categoryId,
+//     },
+//   });
 
-  revalidatePath("/products");
-}
+//   revalidatePath("/products");
+// }
 
-export async function deleteProduct(id: string) {
-  const session = await auth();
-  if (!session) throw new Error("未授权");
+// export async function deleteProduct(id: string) {
+//   const session = await auth();
+//   if (!session) throw new Error("未授权");
 
-  await prisma.product.delete({
-    where: { id },
-  });
+//   await prisma.product.delete({
+//     where: { id },
+//   });
 
-  revalidatePath("/products");
-}
+//   revalidatePath("/products");
+// }

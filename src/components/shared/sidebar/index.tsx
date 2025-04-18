@@ -1,27 +1,35 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { LayoutDashboard, ShoppingCart, Package, Users, Settings } from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { SidebarLink } from './sidebar-link'
-import { ToggleButton } from './toggle-button'
+import { useState } from "react";
+import {
+  LayoutDashboard,
+  ShoppingCart,
+  Package,
+  Users,
+  Settings,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { SidebarLink } from "./sidebar-link";
+import { ToggleButton } from "./toggle-button";
 // import { useSession } from 'next-auth/react'
 
-export function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false)
+export function Sidebar(props: boolean) {
+  console.log(props);
+
+  const [collapsed, setCollapsed] = useState(false);
   // const { data: session } = useSession()
-  
+
   return (
     <aside
       className={cn(
-        'fixed top-16 left-0 h-[calc(100vh-4rem)] border-r bg-background z-40 transition-all',
-        collapsed ? 'w-16' : 'w-64'
+        "fixed top-16 left-0 h-[calc(100vh-4rem)] border-r bg-background z-40 transition-all",
+        collapsed ? "w-16" : "w-64"
       )}
     >
       {/* 折叠按钮 */}
-      <ToggleButton 
+      <ToggleButton
         collapsed={collapsed}
-        onToggle={() => setCollapsed(!collapsed)} 
+        onToggle={() => setCollapsed(!collapsed)}
       />
 
       {/* 导航菜单 */}
@@ -72,5 +80,5 @@ export function Sidebar() {
         </SidebarLink>
       </div>
     </aside>
-  )
+  );
 }
