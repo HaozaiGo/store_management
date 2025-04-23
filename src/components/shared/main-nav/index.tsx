@@ -7,7 +7,7 @@ import { navConfig } from "./nav-items"
 import { UserDropdown } from "./user-dropdown"
 // import { auth } from "@/auth"
 
-export async function MainNav() {
+export function MainNav() {
   // const session = await auth()
   // const pathname = usePathname()
 

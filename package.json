@@ -6,9 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "queries": "ts-node ./src/auth/test.ts",
+    "prisma": "ts-node /src/lib/prisma/seed.ts"
   },
-  "prisma": { "seed": "ts-node /src/lib/prisma/seed.ts" },
+  "type": "module",
   "dependencies": {
     "@auth/prisma-adapter": "^2.8.0",
     "@hookform/resolvers": "^4.1.3",
@@ -35,7 +37,8 @@
     "sonner": "^2.0.2",
     "tailwind-merge": "^3.1.0",
     "tw-animate-css": "^1.2.5",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
