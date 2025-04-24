@@ -1,74 +1,44 @@
 import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@auth/prisma-adapter";
-// import { prisma } from "@/lib/prisma"
-import prisma from "@/lib/prisma/client";
-import { loginSchema } from "@/lib/validations/auth";
-import bcrypt from "bcryptjs";
-
-await prisma.user.create({
-  data: {
-    name: "Alice",
-    email: "alice@prisma.io",
-    password: "password"
-  },
-});
-const allUsers = await prisma.user.findMany();
-console.log(allUsers);
-
-export const { auth, signIn, signOut, unstable_update } = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
+import CredentialsProvider from "next-auth/providers/credentials";
+const auth = NextAuth({
   providers: [
-    Credentials({
+    CredentialsProvider({
+      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      authorize: async (credentials) => {
-        try {
-          const { email, password } = await loginSchema.parseAsync(credentials);
+      async authorize(credentials, req) {
+        // 这里添加你的认证逻辑
+        // 例如查询数据库验证用户
+        const user = { id: 1, name: "admin", email: "admin@example.com" };
 
-          const user = await prisma.user.findUnique({
-            where: { email },
-          });
-
-          if (!user) return null;
-
-          const isValid = await bcrypt.compare(password, user.password);
-          if (!isValid) return null;
-
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            role: user.role,
-          };
-        } catch (error) {
-          return null;
+        if (
+          credentials?.username === "admin" &&
+          credentials?.password === "admin123"
+        ) {
+          return user;
         }
+
+        return null;
       },
     }),
   ],
+  pages: {
+    signIn: "/auth/login",
+  },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    async jwt({ token, user }) {
       if (user) {
-        token.role = user.role;
         token.id = user.id;
       }
       return token;
     },
-    session: async ({ session, token }) => {
-      if (session.user && token) {
-        session.user.role = token.role as string;
-        session.user.id = token.id as string;
-      }
+    async session({ session, token }) {
+      session.user.id = token.id as string;
       return session;
     },
   },
-  pages: {
-    signIn: "/auth/login",
-    error: "/auth/login",
-  },
   secret: process.env.NEXTAUTH_SECRET,
 });
+export default auth;
