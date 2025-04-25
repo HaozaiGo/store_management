@@ -10,6 +10,7 @@
     "queries": "ts-node ./src/auth/test.ts",
     "prisma": "ts-node /src/lib/prisma/seed.ts"
   },
+  
   "type": "module",
   "dependencies": {
     "@auth/prisma-adapter": "^2.8.0",

@@ -63,7 +63,7 @@ export function Sidebar() {
         {
           <SidebarLink
             icon={<Users className="h-4 w-4" />}
-            href="/login"
+            href="/customers"
             collapsed={collapsed}
           >
             客户管理

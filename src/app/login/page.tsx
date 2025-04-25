@@ -1,56 +1,74 @@
-"use client"
-import { signIn } from 'next-auth/react'
-// import { useRouter } from 'next/router'
-import { useState } from 'react'
-import Head from 'next/head'
+"use client";
+import { signIn } from "next-auth/react";
+import { useEffect, useState } from "react";
+import Head from "next/head";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  // const router = useRouter()
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError("");
+    console.log(username, password);
 
-    const result = await signIn('credentials', {
-      redirect: false,
-      username,
-      password,
-    })
+    const response = await fetch("/api/system", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        password,
+      }),
+    });
+    // console.log(response);
 
-    if (result?.error) {
-      setError(result.error)
-    } else {
-      // router.push('/admin/dashboard')
-    }
-  }
+    // const result = await signIn("credentials", {
+    //   redirect: false,
+    //   username,
+    //   password,
+    // });
+
+    // console.log(result);
+
+    // if (result?.error) {
+    //   setError(result.error);
+    // } else {
+    //   // router.push('/admin/dashboard')
+    // }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <Head>
         <title>后台登录</title>
       </Head>
-      
+
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             后台管理系统
           </h2>
         </div>
-        
+
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <div
+            className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
             <span className="block sm:inline">{error}</span>
           </div>
         )}
-        
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="username" className="sr-only">用户名</label>
+              <label htmlFor="username" className="sr-only">
+                用户名
+              </label>
               <input
                 id="username"
                 name="username"
@@ -63,7 +81,9 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">密码</label>
+              <label htmlFor="password" className="sr-only">
+                密码
+              </label>
               <input
                 id="password"
                 name="password"
@@ -85,13 +105,19 @@ export default function LoginPage() {
                 type="checkbox"
                 className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
+              <label
+                htmlFor="remember-me"
+                className="ml-2 block text-sm text-gray-900"
+              >
                 记住我
               </label>
             </div>
 
             <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a
+                href="#"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
+              >
                 忘记密码?
               </a>
             </div>
@@ -108,5 +134,5 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
-  )
+  );
 }
